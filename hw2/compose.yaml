@@ -1,0 +1,23 @@
+services:
+  mongo:
+    image: mongo:8.0
+    container_name: video-lab-mongo
+    ports:
+      - "127.0.0.1:27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    restart: unless-stopped
+
+  app:
+    build: .
+    profiles: ["tools"]
+    environment:
+      MONGO_URI: mongodb://mongo:27017
+      PYTHONPATH: /lab/scripts
+    volumes:
+      - ./scripts:/lab/scripts:ro
+    depends_on:
+      - mongo
+
+volumes:
+  mongo_data:
