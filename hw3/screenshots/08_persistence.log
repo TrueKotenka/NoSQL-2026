@@ -1,0 +1,27 @@
+$ redis-cli CONFIG GET appendonly
+1) "appendonly"
+2) "yes"
+Пять ключей до перезапуска:
+HGET vidlab:user:1 name
+HGET vidlab:channel:1 name
+HGET vidlab:video:1 title
+GET vidlab:stats:views:video:2
+ZSCORE vidlab:videos:rating video:2
+user:1.name=Анна
+channel:1.name=Код и кофе
+video:1.title=Индексы в MongoDB
+video:2.views=245
+video:2.rating=42
+$ docker compose restart redis
+Те же пять ключей после перезапуска:
+HGET vidlab:user:1 name
+HGET vidlab:channel:1 name
+HGET vidlab:video:1 title
+GET vidlab:stats:views:video:2
+ZSCORE vidlab:videos:rating video:2
+user:1.name=Анна
+channel:1.name=Код и кофе
+video:1.title=Индексы в MongoDB
+video:2.views=245
+video:2.rating=42
+Совпадение: да

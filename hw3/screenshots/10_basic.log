@@ -1,0 +1,41 @@
+Создание, получение, изменение, удаление и проверка существования
+
+$ redis-cli SET vidlab:demo:note Посмотреть позже
+OK
+
+$ redis-cli GET vidlab:demo:note
+Посмотреть позже
+
+$ redis-cli SET vidlab:demo:note Посмотреть сегодня
+OK
+
+$ redis-cli GET vidlab:demo:note
+Посмотреть сегодня
+
+$ redis-cli EXISTS vidlab:demo:note
+1
+
+$ redis-cli HGETALL vidlab:video:1
+title
+Индексы в MongoDB
+channel_id
+1
+category
+Технологии
+likes
+36
+
+$ redis-cli MGET vidlab:stats:views:video:1 vidlab:stats:views:video:2
+104
+245
+
+$ redis-cli LRANGE vidlab:channel:1:recent 0 -1
+video:2
+video:5
+video:1
+
+$ redis-cli DEL vidlab:demo:note
+1
+
+$ redis-cli EXISTS vidlab:demo:note
+0

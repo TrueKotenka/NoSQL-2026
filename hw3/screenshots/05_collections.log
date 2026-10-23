@@ -1,0 +1,45 @@
+List: диапазон, последний элемент и позиция
+
+$ redis-cli LRANGE vidlab:channel:1:recent 0 -1
+video:2
+video:5
+video:1
+
+$ redis-cli LINDEX vidlab:channel:1:recent -1
+video:1
+
+$ redis-cli LPOS vidlab:channel:1:recent video:5
+1
+Set: элементы, принадлежность и размер
+
+$ redis-cli SMEMBERS vidlab:video:1:tags
+mongodb
+redis
+databases
+
+$ redis-cli SISMEMBER vidlab:video:1:tags redis
+1
+
+$ redis-cli SCARD vidlab:video:1:tags
+3
+Sorted Set: рейтинг, место и балл элемента
+
+$ redis-cli ZRANGE vidlab:videos:rating 0 -1 REV WITHSCORES
+video:2
+42
+video:6
+38
+video:1
+36
+video:4
+31
+video:5
+28
+video:3
+25
+
+$ redis-cli ZREVRANK vidlab:videos:rating video:2
+0
+
+$ redis-cli ZSCORE vidlab:videos:rating video:2
+42

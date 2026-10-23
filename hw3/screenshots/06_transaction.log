@@ -1,0 +1,33 @@
+До транзакции
+
+$ redis-cli GET vidlab:demo:balance:user:1
+100
+
+$ redis-cli GET vidlab:demo:paid_views:video:1
+0
+
+$ redis-cli SMEMBERS vidlab:demo:access:user:1
+(nil/пусто)
+Один клиент Redis, три операции изменения между MULTI и EXEC:
+MULTI
+DECRBY vidlab:demo:balance:user:1 10
+INCRBY vidlab:demo:paid_views:video:1 1
+SADD vidlab:demo:access:user:1 video:1
+EXEC
+OK
+QUEUED
+QUEUED
+QUEUED
+1) (integer) 90
+2) (integer) 1
+3) (integer) 1
+После транзакции
+
+$ redis-cli GET vidlab:demo:balance:user:1
+90
+
+$ redis-cli GET vidlab:demo:paid_views:video:1
+1
+
+$ redis-cli SMEMBERS vidlab:demo:access:user:1
+video:1

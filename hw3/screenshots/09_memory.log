@@ -1,0 +1,22 @@
+
+$ redis-cli TYPE vidlab:user:1
+hash
+$ redis-cli MEMORY USAGE vidlab:user:1 SAMPLES 0
+120
+
+$ redis-cli TYPE vidlab:channel:1:recent
+list
+$ redis-cli MEMORY USAGE vidlab:channel:1:recent SAMPLES 0
+112
+
+$ redis-cli TYPE vidlab:videos:rating
+zset
+$ redis-cli MEMORY USAGE vidlab:videos:rating SAMPLES 0
+144
+
+Ключ                              | TYPE       | MEMORY USAGE, байт
+--------------------------------------------------------------------------
+vidlab:user:1                         | hash       | 120
+vidlab:channel:1:recent               | list       | 112
+vidlab:videos:rating                  | zset       | 144
+Значения зависят от версии Redis и способа размещения данных в памяти.

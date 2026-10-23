@@ -1,0 +1,27 @@
+Первое обращение: ключ отсутствует
+
+$ redis-cli DEL vidlab:cache:video:1:summary
+0
+
+$ redis-cli EXISTS vidlab:cache:video:1:summary
+0
+
+$ redis-cli GET vidlab:cache:video:1:summary
+(nil/пусто)
+Загрузка из основных ключей и сохранение кэша на 120 секунд
+
+$ redis-cli HGET vidlab:video:1 title
+Индексы в MongoDB
+
+$ redis-cli GET vidlab:stats:views:video:1
+104
+
+$ redis-cli SET vidlab:cache:video:1:summary {"title":"Индексы в MongoDB","views":104} EX 120
+OK
+Повторное обращение: кэш найден
+
+$ redis-cli GET vidlab:cache:video:1:summary
+{"title":"Индексы в MongoDB","views":104}
+
+$ redis-cli TTL vidlab:cache:video:1:summary
+120

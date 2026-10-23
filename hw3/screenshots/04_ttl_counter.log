@@ -1,0 +1,41 @@
+Два ключа с TTL, изменение TTL и удаление ограничения
+
+$ redis-cli SET vidlab:session:user:1 session-anna EX 120
+OK
+
+$ redis-cli SET vidlab:token:reset:user:2 reset-boris EX 180
+OK
+
+$ redis-cli TTL vidlab:session:user:1
+120
+
+$ redis-cli TTL vidlab:token:reset:user:2
+180
+
+$ redis-cli EXPIRE vidlab:session:user:1 300
+1
+
+$ redis-cli TTL vidlab:session:user:1
+300
+
+$ redis-cli PERSIST vidlab:token:reset:user:2
+1
+
+$ redis-cli TTL vidlab:token:reset:user:2
+-1
+Атомарный счётчик просмотров: 100 → 101 → 106 → 104
+
+$ redis-cli SET vidlab:stats:views:video:1 100
+OK
+
+$ redis-cli INCR vidlab:stats:views:video:1
+101
+
+$ redis-cli INCRBY vidlab:stats:views:video:1 5
+106
+
+$ redis-cli DECRBY vidlab:stats:views:video:1 2
+104
+
+$ redis-cli GET vidlab:stats:views:video:1
+104

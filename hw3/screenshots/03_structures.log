@@ -1,0 +1,49 @@
+$ docker compose ps
+NAME          IMAGE              COMMAND                  SERVICE   CREATED          STATUS                    PORTS
+hw3-redis-1   redis:7.4-alpine   "docker-entrypoint.s…"   redis     41 minutes ago   Up 18 minutes (healthy)   127.0.0.1:6379->6379/tcp
+
+$ redis-cli PING
+PONG
+
+$ redis-cli DBSIZE
+31
+Пять типов структур данных
+
+$ redis-cli TYPE vidlab:stats:views:video:1
+string
+
+$ redis-cli GET vidlab:stats:views:video:1
+104
+
+$ redis-cli TYPE vidlab:video:1
+hash
+
+$ redis-cli HGET vidlab:video:1 title
+Индексы в MongoDB
+
+$ redis-cli TYPE vidlab:channel:1:recent
+list
+
+$ redis-cli LRANGE vidlab:channel:1:recent 0 -1
+video:2
+video:5
+video:1
+
+$ redis-cli TYPE vidlab:video:1:tags
+set
+
+$ redis-cli SMEMBERS vidlab:video:1:tags
+mongodb
+redis
+databases
+
+$ redis-cli TYPE vidlab:videos:rating
+zset
+
+$ redis-cli ZRANGE vidlab:videos:rating 0 2 REV WITHSCORES
+video:2
+42
+video:6
+38
+video:1
+36

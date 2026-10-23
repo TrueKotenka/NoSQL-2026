@@ -1,0 +1,3 @@
+$ docker compose ps
+NAME          IMAGE              COMMAND                  SERVICE   CREATED          STATUS                    PORTS
+hw3-redis-1   redis:7.4-alpine   "docker-entrypoint.s…"   redis     41 minutes ago   Up 18 minutes (healthy)   127.0.0.1:6379->6379/tcp
