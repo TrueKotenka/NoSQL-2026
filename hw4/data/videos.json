@@ -1,0 +1,590 @@
+[
+  {
+    "video_id": "v001",
+    "title": "Redis для начинающих",
+    "description": "Кэширование данных и первые команды Redis на примере видеосервиса.",
+    "category": "technology",
+    "channel": "Код и кофе",
+    "tags": [
+      "redis",
+      "cache"
+    ],
+    "views": 4379,
+    "rating": 3.6,
+    "published_at": "2026-01-03",
+    "is_premium": false,
+    "duration_minutes": 10
+  },
+  {
+    "video_id": "v002",
+    "title": "Оптимизация кэша Redis",
+    "description": "Redis ускоряет выдачу видео и хранит счётчики просмотров.",
+    "category": "technology",
+    "channel": "Код и кофе",
+    "tags": [
+      "redis",
+      "performance"
+    ],
+    "views": 5758,
+    "rating": 3.7,
+    "published_at": "2026-01-06",
+    "is_premium": false,
+    "duration_minutes": 13
+  },
+  {
+    "video_id": "v003",
+    "title": "Базы данных для видеосервиса",
+    "description": "Храним данные в MongoDB и Redis, сравниваем модели хранения.",
+    "category": "technology",
+    "channel": "Код и кофе",
+    "tags": [
+      "database",
+      "redis"
+    ],
+    "views": 7137,
+    "rating": 3.8,
+    "published_at": "2026-01-09",
+    "is_premium": false,
+    "duration_minutes": 16,
+    "subtitles": "ru"
+  },
+  {
+    "video_id": "v004",
+    "title": "Поиск видео в Elasticsearch",
+    "description": "Индексация названий и описаний для полнотекстового поиска.",
+    "category": "technology",
+    "channel": "Код и кофе",
+    "tags": [
+      "elasticsearch",
+      "search"
+    ],
+    "views": 8516,
+    "rating": 3.9,
+    "published_at": "2026-01-12",
+    "is_premium": true,
+    "duration_minutes": 19
+  },
+  {
+    "video_id": "v005",
+    "title": "Kubernetes для разработчиков",
+    "description": "Развёртывание сервисов и работа с контейнерами в Kubernetes.",
+    "category": "technology",
+    "channel": "Код и кофе",
+    "tags": [
+      "kubernetes",
+      "containers"
+    ],
+    "views": 12300,
+    "rating": 4.0,
+    "published_at": "2026-01-15",
+    "is_premium": false,
+    "duration_minutes": 22
+  },
+  {
+    "video_id": "v006",
+    "title": "Базы данных и индексы MongoDB",
+    "description": "Запросы к MongoDB, индексы и анализ производительности.",
+    "category": "technology",
+    "channel": "Код и кофе",
+    "tags": [
+      "mongodb",
+      "database"
+    ],
+    "views": 11274,
+    "rating": 4.1,
+    "published_at": "2026-01-18",
+    "is_premium": false,
+    "duration_minutes": 25,
+    "subtitles": "ru"
+  },
+  {
+    "video_id": "v007",
+    "title": "Как устроен телескоп",
+    "description": "Зеркала, линзы и данные наблюдений далёких галактик.",
+    "category": "science",
+    "channel": "Физика рядом",
+    "tags": [
+      "astronomy",
+      "optics"
+    ],
+    "views": 12653,
+    "rating": 4.2,
+    "published_at": "2026-01-21",
+    "is_premium": false,
+    "duration_minutes": 28
+  },
+  {
+    "video_id": "v008",
+    "title": "Данные спутников Земли",
+    "description": "Как спутники передают данные о погоде и поверхности планеты.",
+    "category": "science",
+    "channel": "Физика рядом",
+    "tags": [
+      "space",
+      "data"
+    ],
+    "views": 14032,
+    "rating": 4.3,
+    "published_at": "2026-01-24",
+    "is_premium": true,
+    "duration_minutes": 31
+  },
+  {
+    "video_id": "v009",
+    "title": "Почему небо голубое",
+    "description": "Рассеяние света в атмосфере на простых опытах.",
+    "category": "science",
+    "channel": "Физика рядом",
+    "tags": [
+      "physics",
+      "light"
+    ],
+    "views": 15411,
+    "rating": 4.4,
+    "published_at": "2026-01-27",
+    "is_premium": false,
+    "duration_minutes": 34,
+    "subtitles": "ru"
+  },
+  {
+    "video_id": "v010",
+    "title": "Эксперимент с магнитами",
+    "description": "Измеряем магнитное поле и объясняем результаты опыта.",
+    "category": "science",
+    "channel": "Физика рядом",
+    "tags": [
+      "physics",
+      "experiment"
+    ],
+    "views": 16790,
+    "rating": 4.5,
+    "published_at": "2026-01-30",
+    "is_premium": false,
+    "duration_minutes": 8
+  },
+  {
+    "video_id": "v011",
+    "title": "Космические лучи",
+    "description": "История открытия и методы регистрации частиц.",
+    "category": "science",
+    "channel": "Физика рядом",
+    "tags": [
+      "space",
+      "particles"
+    ],
+    "views": 18169,
+    "rating": 4.6,
+    "published_at": "2026-02-02",
+    "is_premium": false,
+    "duration_minutes": 11
+  },
+  {
+    "video_id": "v012",
+    "title": "Чёрные дыры без мифов",
+    "description": "Как астрономы наблюдают движение вещества вокруг чёрных дыр.",
+    "category": "science",
+    "channel": "Физика рядом",
+    "tags": [
+      "astronomy",
+      "gravity"
+    ],
+    "views": 19548,
+    "rating": 4.7,
+    "published_at": "2026-02-05",
+    "is_premium": true,
+    "duration_minutes": 14,
+    "subtitles": "ru"
+  },
+  {
+    "video_id": "v013",
+    "title": "Выходные в Казани",
+    "description": "Маршрут по центру города, музеи и прогулка у реки.",
+    "category": "travel",
+    "channel": "Город пешком",
+    "tags": [
+      "kazan",
+      "city"
+    ],
+    "views": 20927,
+    "rating": 4.8,
+    "published_at": "2026-02-08",
+    "is_premium": false,
+    "duration_minutes": 17
+  },
+  {
+    "video_id": "v014",
+    "title": "Пешком по Санкт Петербургу",
+    "description": "Архитектура, каналы и удобный маршрут на один день.",
+    "category": "travel",
+    "channel": "Город пешком",
+    "tags": [
+      "petersburg",
+      "city"
+    ],
+    "views": 3306,
+    "rating": 4.9,
+    "published_at": "2026-02-11",
+    "is_premium": false,
+    "duration_minutes": 20
+  },
+  {
+    "video_id": "v015",
+    "title": "Горы Кавказа летом",
+    "description": "Тропа для новичков, погода и необходимые вещи.",
+    "category": "travel",
+    "channel": "Город пешком",
+    "tags": [
+      "mountains",
+      "hiking"
+    ],
+    "views": 4685,
+    "rating": 3.5,
+    "published_at": "2026-02-14",
+    "is_premium": false,
+    "duration_minutes": 23,
+    "subtitles": "ru"
+  },
+  {
+    "video_id": "v016",
+    "title": "Данные о городских маршрутах",
+    "description": "Планируем прогулку с помощью открытых данных транспорта.",
+    "category": "travel",
+    "channel": "Город пешком",
+    "tags": [
+      "city",
+      "data"
+    ],
+    "views": 6064,
+    "rating": 3.6,
+    "published_at": "2026-02-17",
+    "is_premium": true,
+    "duration_minutes": 26
+  },
+  {
+    "video_id": "v017",
+    "title": "Поездка на Байкал",
+    "description": "Берег озера, маршруты и советы по жилью.",
+    "category": "travel",
+    "channel": "Город пешком",
+    "tags": [
+      "baikal",
+      "nature"
+    ],
+    "views": 7443,
+    "rating": 3.7,
+    "published_at": "2026-02-20",
+    "is_premium": false,
+    "duration_minutes": 29
+  },
+  {
+    "video_id": "v018",
+    "title": "Осень в Карелии",
+    "description": "Лесные тропы, озёра и фотографии путешествия.",
+    "category": "travel",
+    "channel": "Город пешком",
+    "tags": [
+      "karelia",
+      "nature"
+    ],
+    "views": 8822,
+    "rating": 3.8,
+    "published_at": "2026-02-23",
+    "is_premium": false,
+    "duration_minutes": 32,
+    "subtitles": "ru"
+  },
+  {
+    "video_id": "v019",
+    "title": "Гитара с нуля",
+    "description": "Первые аккорды и упражнения для правой руки.",
+    "category": "music",
+    "channel": "Звук дома",
+    "tags": [
+      "guitar",
+      "lessons"
+    ],
+    "views": 10201,
+    "rating": 3.9,
+    "published_at": "2026-02-26",
+    "is_premium": false,
+    "duration_minutes": 35
+  },
+  {
+    "video_id": "v020",
+    "title": "Как записать подкаст",
+    "description": "Микрофон, запись голоса и монтаж звука.",
+    "category": "music",
+    "channel": "Звук дома",
+    "tags": [
+      "audio",
+      "podcast"
+    ],
+    "views": 11580,
+    "rating": 4.0,
+    "published_at": "2026-03-01",
+    "is_premium": true,
+    "duration_minutes": 9
+  },
+  {
+    "video_id": "v021",
+    "title": "Ритм на барабанах",
+    "description": "Считаем доли и играем простые рисунки.",
+    "category": "music",
+    "channel": "Звук дома",
+    "tags": [
+      "drums",
+      "rhythm"
+    ],
+    "views": 12959,
+    "rating": 4.1,
+    "published_at": "2026-03-04",
+    "is_premium": false,
+    "duration_minutes": 12,
+    "subtitles": "ru"
+  },
+  {
+    "video_id": "v022",
+    "title": "Синтезатор для начинающих",
+    "description": "Звуковые волны, фильтры и первые мелодии.",
+    "category": "music",
+    "channel": "Звук дома",
+    "tags": [
+      "synth",
+      "lessons"
+    ],
+    "views": 14338,
+    "rating": 4.2,
+    "published_at": "2026-03-07",
+    "is_premium": false,
+    "duration_minutes": 15
+  },
+  {
+    "video_id": "v023",
+    "title": "Музыка для короткого видео",
+    "description": "Выбираем темп и создаём фоновую композицию.",
+    "category": "music",
+    "channel": "Звук дома",
+    "tags": [
+      "composition",
+      "video"
+    ],
+    "views": 15717,
+    "rating": 4.3,
+    "published_at": "2026-03-10",
+    "is_premium": false,
+    "duration_minutes": 18
+  },
+  {
+    "video_id": "v024",
+    "title": "Чистый звук в комнате",
+    "description": "Убираем шум и настраиваем запись дома.",
+    "category": "music",
+    "channel": "Звук дома",
+    "tags": [
+      "audio",
+      "recording"
+    ],
+    "views": 17096,
+    "rating": 4.4,
+    "published_at": "2026-03-13",
+    "is_premium": true,
+    "duration_minutes": 21,
+    "subtitles": "ru"
+  },
+  {
+    "video_id": "v025",
+    "title": "Домашняя паста",
+    "description": "Тесто, соус и порядок приготовления ужина.",
+    "category": "cooking",
+    "channel": "Кухня каждый день",
+    "tags": [
+      "pasta",
+      "dinner"
+    ],
+    "views": 18475,
+    "rating": 4.5,
+    "published_at": "2026-03-16",
+    "is_premium": false,
+    "duration_minutes": 24
+  },
+  {
+    "video_id": "v026",
+    "title": "Завтрак за десять минут",
+    "description": "Омлет и овощи без сложных продуктов.",
+    "category": "cooking",
+    "channel": "Кухня каждый день",
+    "tags": [
+      "breakfast",
+      "quick"
+    ],
+    "views": 19854,
+    "rating": 4.6,
+    "published_at": "2026-03-19",
+    "is_premium": false,
+    "duration_minutes": 27
+  },
+  {
+    "video_id": "v027",
+    "title": "Хлеб на закваске",
+    "description": "Подготовка теста, расстойка и выпечка.",
+    "category": "cooking",
+    "channel": "Кухня каждый день",
+    "tags": [
+      "bread",
+      "baking"
+    ],
+    "views": 21233,
+    "rating": 4.7,
+    "published_at": "2026-03-22",
+    "is_premium": false,
+    "duration_minutes": 30,
+    "subtitles": "ru"
+  },
+  {
+    "video_id": "v028",
+    "title": "Суп из сезонных овощей",
+    "description": "Простой рецепт с морковью и тыквой.",
+    "category": "cooking",
+    "channel": "Кухня каждый день",
+    "tags": [
+      "soup",
+      "vegetables"
+    ],
+    "views": 3612,
+    "rating": 4.8,
+    "published_at": "2026-03-25",
+    "is_premium": true,
+    "duration_minutes": 33
+  },
+  {
+    "video_id": "v029",
+    "title": "Кофе дома",
+    "description": "Помол, температура воды и способы заваривания.",
+    "category": "cooking",
+    "channel": "Кухня каждый день",
+    "tags": [
+      "coffee",
+      "drinks"
+    ],
+    "views": 4991,
+    "rating": 4.9,
+    "published_at": "2026-03-28",
+    "is_premium": false,
+    "duration_minutes": 7
+  },
+  {
+    "video_id": "v030",
+    "title": "Десерт без выпечки",
+    "description": "Собираем крем и ягоды в стакане.",
+    "category": "cooking",
+    "channel": "Кухня каждый день",
+    "tags": [
+      "dessert",
+      "quick"
+    ],
+    "views": 6370,
+    "rating": 3.5,
+    "published_at": "2026-03-31",
+    "is_premium": false,
+    "duration_minutes": 10,
+    "subtitles": "ru"
+  },
+  {
+    "video_id": "v031",
+    "title": "Разминка перед бегом",
+    "description": "Упражнения для суставов и лёгкий старт тренировки.",
+    "category": "sport",
+    "channel": "Движение",
+    "tags": [
+      "running",
+      "warmup"
+    ],
+    "views": 7749,
+    "rating": 3.6,
+    "published_at": "2026-04-03",
+    "is_premium": false,
+    "duration_minutes": 13
+  },
+  {
+    "video_id": "v032",
+    "title": "Первый забег на пять километров",
+    "description": "План тренировок и контроль темпа для новичков.",
+    "category": "sport",
+    "channel": "Движение",
+    "tags": [
+      "running",
+      "training"
+    ],
+    "views": 9128,
+    "rating": 3.7,
+    "published_at": "2026-04-06",
+    "is_premium": true,
+    "duration_minutes": 16
+  },
+  {
+    "video_id": "v033",
+    "title": "Силовая тренировка дома",
+    "description": "Приседания, отжимания и безопасная нагрузка.",
+    "category": "sport",
+    "channel": "Движение",
+    "tags": [
+      "strength",
+      "home"
+    ],
+    "views": 10507,
+    "rating": 3.8,
+    "published_at": "2026-04-09",
+    "is_premium": false,
+    "duration_minutes": 19,
+    "subtitles": "ru"
+  },
+  {
+    "video_id": "v034",
+    "title": "Велосипед по городу",
+    "description": "Правила движения и подготовка велосипеда.",
+    "category": "sport",
+    "channel": "Движение",
+    "tags": [
+      "cycling",
+      "city"
+    ],
+    "views": 11886,
+    "rating": 3.9,
+    "published_at": "2026-04-12",
+    "is_premium": false,
+    "duration_minutes": 22
+  },
+  {
+    "video_id": "v035",
+    "title": "Растяжка после тренировки",
+    "description": "Дыхание и спокойные упражнения для восстановления.",
+    "category": "sport",
+    "channel": "Движение",
+    "tags": [
+      "stretching",
+      "recovery"
+    ],
+    "views": 13265,
+    "rating": 4.0,
+    "published_at": "2026-04-15",
+    "is_premium": false,
+    "duration_minutes": 25
+  },
+  {
+    "video_id": "v036",
+    "title": "Подготовка к марафону",
+    "description": "Длинные пробежки, питание и восстановление.",
+    "category": "sport",
+    "channel": "Движение",
+    "tags": [
+      "running",
+      "marathon"
+    ],
+    "views": 14644,
+    "rating": 4.1,
+    "published_at": "2026-04-18",
+    "is_premium": true,
+    "duration_minutes": 28,
+    "subtitles": "ru"
+  }
+]

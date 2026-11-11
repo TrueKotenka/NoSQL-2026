@@ -1,0 +1,21 @@
+$ python3 scripts/query.py match_phrase
+POST /videos/_search
+{
+  "track_total_hits": true,
+  "size": 10,
+  "query": {
+    "match_phrase": {
+      "title": "базы данных"
+    }
+  },
+  "sort": [
+    {
+      "video_id": "asc"
+    }
+  ]
+}
+RESULT
+total=2
+1. v003 score=null views=7137 category=technology title=Базы данных для видеосервиса
+2. v006 score=null views=11274 category=technology title=Базы данных и индексы MongoDB
+Ожидание: Заголовки с последовательностью «базы данных»; перестановка слов не подходит.

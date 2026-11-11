@@ -1,0 +1,44 @@
+$ python3 scripts/query.py bool_must_filter
+POST /videos/_search
+{
+  "track_total_hits": true,
+  "size": 10,
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "match": {
+            "description": "Redis"
+          }
+        }
+      ],
+      "filter": [
+        {
+          "term": {
+            "category": "technology"
+          }
+        },
+        {
+          "range": {
+            "views": {
+              "gte": 5000
+            }
+          }
+        }
+      ]
+    }
+  },
+  "sort": [
+    {
+      "_score": "desc"
+    },
+    {
+      "video_id": "asc"
+    }
+  ]
+}
+RESULT
+total=2
+1. v002 score=2.19209 views=5758 category=technology title=Оптимизация кэша Redis
+2. v003 score=2.07518 views=7137 category=technology title=Базы данных для видеосервиса
+Ожидание: Описание содержит Redis; категория technology; просмотров не меньше 5000.

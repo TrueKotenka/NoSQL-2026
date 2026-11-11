@@ -1,0 +1,17 @@
+$ docker compose ps
+failed to get console mode for stdout: The handle is invalid.
+NAME               IMAGE              COMMAND                  SERVICE      CREATED          STATUS                    PORTS
+hw5-cassandra1-1   cassandra:4.1.12   "docker-entrypoint.s…"   cassandra1   13 minutes ago   Up 13 minutes (healthy)   7000-7001/tcp, 7199/tcp, 9160/tcp, 127.0.0.1:9042->9042/tcp
+hw5-cassandra2-1   cassandra:4.1.12   "docker-entrypoint.s…"   cassandra2   13 minutes ago   Up 11 minutes (healthy)   7000-7001/tcp, 7199/tcp, 9042/tcp, 9160/tcp
+hw5-cassandra3-1   cassandra:4.1.12   "docker-entrypoint.s…"   cassandra3   13 minutes ago   Up 10 minutes (healthy)   7000-7001/tcp, 7199/tcp, 9042/tcp, 9160/tcp
+$ docker compose exec -T cassandra1 nodetool status
+failed to get console mode for stdout: The handle is invalid.
+Datacenter: dc1
+===============
+Status=Up/Down
+|/ State=Normal/Leaving/Joining/Moving
+--  Address     Load        Tokens  Owns (effective)  Host ID                               Rack 
+UN  172.19.0.2  103.26 KiB  16      100.0%            49b79bd6-d50b-4da1-a09d-ec736952e4f4  rack1
+UN  172.19.0.4  104.89 KiB  16      100.0%            ee13f035-2540-4124-a7e1-d3ce60b88512  rack1
+UN  172.19.0.3  99.88 KiB   16      100.0%            a44de53a-7b8c-4cd8-8697-e09e2aaea6d7  rack1
+

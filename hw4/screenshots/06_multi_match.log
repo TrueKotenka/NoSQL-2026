@@ -1,0 +1,29 @@
+$ python3 scripts/query.py multi_match
+POST /videos/_search
+{
+  "track_total_hits": true,
+  "size": 10,
+  "query": {
+    "multi_match": {
+      "query": "Redis",
+      "fields": [
+        "title",
+        "description"
+      ]
+    }
+  },
+  "sort": [
+    {
+      "_score": "desc"
+    },
+    {
+      "video_id": "asc"
+    }
+  ]
+}
+RESULT
+total=3
+1. v001 score=2.79140 views=4379 category=technology title=Redis для начинающих
+2. v002 score=2.79140 views=5758 category=technology title=Оптимизация кэша Redis
+3. v003 score=2.07518 views=7137 category=technology title=Базы данных для видеосервиса
+Ожидание: Redis в заголовке или описании, включая видео v003.

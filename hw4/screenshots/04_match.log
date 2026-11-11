@@ -1,0 +1,24 @@
+$ python3 scripts/query.py match
+POST /videos/_search
+{
+  "track_total_hits": true,
+  "size": 10,
+  "query": {
+    "match": {
+      "title": "Redis"
+    }
+  },
+  "sort": [
+    {
+      "_score": "desc"
+    },
+    {
+      "video_id": "asc"
+    }
+  ]
+}
+RESULT
+total=2
+1. v001 score=2.79140 views=4379 category=technology title=Redis для начинающих
+2. v002 score=2.79140 views=5758 category=technology title=Оптимизация кэша Redis
+Ожидание: Видео, где title содержит слово Redis после текстового анализа.

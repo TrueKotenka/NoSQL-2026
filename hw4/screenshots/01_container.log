@@ -1,0 +1,3 @@
+$ docker compose ps
+NAME                  IMAGE                                                  COMMAND                  SERVICE         CREATED         STATUS                   PORTS
+hw4-elasticsearch-1   docker.elastic.co/elasticsearch/elasticsearch:8.15.0   "/bin/tini -- /usr/l…"   elasticsearch   3 minutes ago   Up 3 minutes (healthy)   127.0.0.1:9200->9200/tcp

@@ -1,0 +1,184 @@
+=== Три узла работают ===
+$ docker compose exec -T cassandra1 nodetool status
+Datacenter: dc1
+===============
+Status=Up/Down
+|/ State=Normal/Leaving/Joining/Moving
+--  Address     Load        Tokens  Owns (effective)  Host ID                               Rack 
+UN  172.20.0.3  99.87 KiB   16      100.0%            77d2fac2-9643-445e-a261-734d718e008e  rack1
+UN  172.20.0.4  99.89 KiB   16      100.0%            fb708983-48d2-40f0-af34-cf3d67bdc8e4  rack1
+UN  172.20.0.2  103.26 KiB  16      100.0%            09775bc8-47b6-498b-ad50-81e3b0bfe58f  rack1
+
+=== 3 узла UN: QUORUM ===
+$ cqlsh: CONSISTENCY QUORUM; SELECT service, event_day, event_time, event_id, message FROM shop_events.service_events WHERE service = 'checkout' AND event_day = '2026-11-10' AND event_time = '2026-11-10T10:15:00+0000' AND event_id = 00000000-0000-4000-8000-000000000008;
+Consistency level set to QUORUM.
+
+ service  | event_day  | event_time                      | event_id                             | message
+----------+------------+---------------------------------+--------------------------------------+---------------
+ checkout | 2026-11-10 | 2026-11-10 10:15:00.000000+0000 | 00000000-0000-4000-8000-000000000008 | Order created
+
+(1 rows)
+$ cqlsh: CONSISTENCY QUORUM; INSERT INTO shop_events.service_events (service, event_day, event_time, event_id, error_code, message) VALUES ('checkout', '2026-11-11', '2026-11-11T12:00:00+0000', 9323a110-ac2e-4e60-940a-120900fbe6d0, null, 'failover initial QUORUM');
+Consistency level set to QUORUM.
+$ cqlsh: CONSISTENCY QUORUM; SELECT event_id, message FROM shop_events.service_events WHERE service = 'checkout' AND event_day = '2026-11-11' AND event_time = '2026-11-11T12:00:00+0000' AND event_id = 9323a110-ac2e-4e60-940a-120900fbe6d0;
+Consistency level set to QUORUM.
+
+ event_id                             | message
+--------------------------------------+-------------------------
+ 9323a110-ac2e-4e60-940a-120900fbe6d0 | failover initial QUORUM
+
+(1 rows)
+Итог: чтение — успех; запись — успех; event_id попытки записи — 9323a110-ac2e-4e60-940a-120900fbe6d0
+
+=== 3 узла UN: ALL ===
+$ cqlsh: CONSISTENCY ALL; SELECT service, event_day, event_time, event_id, message FROM shop_events.service_events WHERE service = 'checkout' AND event_day = '2026-11-10' AND event_time = '2026-11-10T10:15:00+0000' AND event_id = 00000000-0000-4000-8000-000000000008;
+Consistency level set to ALL.
+
+ service  | event_day  | event_time                      | event_id                             | message
+----------+------------+---------------------------------+--------------------------------------+---------------
+ checkout | 2026-11-10 | 2026-11-10 10:15:00.000000+0000 | 00000000-0000-4000-8000-000000000008 | Order created
+
+(1 rows)
+$ cqlsh: CONSISTENCY ALL; INSERT INTO shop_events.service_events (service, event_day, event_time, event_id, error_code, message) VALUES ('checkout', '2026-11-11', '2026-11-11T12:00:00+0000', d85a04d6-e1ac-4690-9dd5-9251d26ba484, null, 'failover initial ALL');
+Consistency level set to ALL.
+$ cqlsh: CONSISTENCY QUORUM; SELECT event_id, message FROM shop_events.service_events WHERE service = 'checkout' AND event_day = '2026-11-11' AND event_time = '2026-11-11T12:00:00+0000' AND event_id = d85a04d6-e1ac-4690-9dd5-9251d26ba484;
+Consistency level set to QUORUM.
+
+ event_id                             | message
+--------------------------------------+----------------------
+ d85a04d6-e1ac-4690-9dd5-9251d26ba484 | failover initial ALL
+
+(1 rows)
+Итог: чтение — успех; запись — успех; event_id попытки записи — d85a04d6-e1ac-4690-9dd5-9251d26ba484
+=== Остановка cassandra3 ===
+$ docker compose stop cassandra3
+ Container hw5-cassandra3-1 Stopping 
+ Container hw5-cassandra3-1 Stopped 
+$ docker compose exec -T cassandra1 nodetool status
+Datacenter: dc1
+===============
+Status=Up/Down
+|/ State=Normal/Leaving/Joining/Moving
+--  Address     Load        Tokens  Owns (effective)  Host ID                               Rack 
+UN  172.20.0.3  99.87 KiB   16      100.0%            77d2fac2-9643-445e-a261-734d718e008e  rack1
+DN  172.20.0.4  99.89 KiB   16      100.0%            fb708983-48d2-40f0-af34-cf3d67bdc8e4  rack1
+UN  172.20.0.2  103.26 KiB  16      100.0%            09775bc8-47b6-498b-ad50-81e3b0bfe58f  rack1
+
+=== 2 UN, 1 DN: QUORUM ===
+$ cqlsh: CONSISTENCY QUORUM; SELECT service, event_day, event_time, event_id, message FROM shop_events.service_events WHERE service = 'checkout' AND event_day = '2026-11-10' AND event_time = '2026-11-10T10:15:00+0000' AND event_id = 00000000-0000-4000-8000-000000000008;
+Consistency level set to QUORUM.
+
+ service  | event_day  | event_time                      | event_id                             | message
+----------+------------+---------------------------------+--------------------------------------+---------------
+ checkout | 2026-11-10 | 2026-11-10 10:15:00.000000+0000 | 00000000-0000-4000-8000-000000000008 | Order created
+
+(1 rows)
+$ cqlsh: CONSISTENCY QUORUM; INSERT INTO shop_events.service_events (service, event_day, event_time, event_id, error_code, message) VALUES ('checkout', '2026-11-11', '2026-11-11T12:00:00+0000', b5d0cf55-ceb5-456b-ab37-fe869aa45a9b, null, 'failover down QUORUM');
+Consistency level set to QUORUM.
+$ cqlsh: CONSISTENCY QUORUM; SELECT event_id, message FROM shop_events.service_events WHERE service = 'checkout' AND event_day = '2026-11-11' AND event_time = '2026-11-11T12:00:00+0000' AND event_id = b5d0cf55-ceb5-456b-ab37-fe869aa45a9b;
+Consistency level set to QUORUM.
+
+ event_id                             | message
+--------------------------------------+----------------------
+ b5d0cf55-ceb5-456b-ab37-fe869aa45a9b | failover down QUORUM
+
+(1 rows)
+Итог: чтение — успех; запись — успех; event_id попытки записи — b5d0cf55-ceb5-456b-ab37-fe869aa45a9b
+
+=== 2 UN, 1 DN: ALL ===
+$ cqlsh: CONSISTENCY ALL; SELECT service, event_day, event_time, event_id, message FROM shop_events.service_events WHERE service = 'checkout' AND event_day = '2026-11-10' AND event_time = '2026-11-10T10:15:00+0000' AND event_id = 00000000-0000-4000-8000-000000000008;
+<stdin>:3:NoHostAvailable: ('Unable to complete the operation against any hosts', {<Host: 127.0.0.1:9042 dc1>: Unavailable('Error from server: code=1000 [Unavailable exception] message="Cannot achieve consistency level ALL" info={\'consistency\': \'ALL\', \'required_replicas\': 3, \'alive_replicas\': 2}')})
+Consistency level set to ALL.
+$ cqlsh: CONSISTENCY ALL; INSERT INTO shop_events.service_events (service, event_day, event_time, event_id, error_code, message) VALUES ('checkout', '2026-11-11', '2026-11-11T12:00:00+0000', 42fb845f-f8de-46e0-bd5b-e8958ee7ac97, null, 'failover down ALL');
+<stdin>:3:NoHostAvailable: ('Unable to complete the operation against any hosts', {<Host: 127.0.0.1:9042 dc1>: Unavailable('Error from server: code=1000 [Unavailable exception] message="Cannot achieve consistency level ALL" info={\'consistency\': \'ALL\', \'required_replicas\': 3, \'alive_replicas\': 2}')})
+Consistency level set to ALL.
+Итог: чтение — ошибка; запись — ошибка; event_id попытки записи — 42fb845f-f8de-46e0-bd5b-e8958ee7ac97
+=== Возврат cassandra3 ===
+$ docker compose start cassandra3
+ Container hw5-cassandra1-1 Waiting 
+ Container hw5-cassandra1-1 Healthy 
+ Container hw5-cassandra2-1 Waiting 
+ Container hw5-cassandra2-1 Healthy 
+ Container hw5-cassandra3-1 Starting 
+ Container hw5-cassandra3-1 Started 
+$ docker compose exec -T cassandra1 nodetool status
+Datacenter: dc1
+===============
+Status=Up/Down
+|/ State=Normal/Leaving/Joining/Moving
+--  Address     Load        Tokens  Owns (effective)  Host ID                               Rack 
+UN  172.20.0.3  99.87 KiB   16      100.0%            77d2fac2-9643-445e-a261-734d718e008e  rack1
+UN  172.20.0.4  166.92 KiB  16      100.0%            fb708983-48d2-40f0-af34-cf3d67bdc8e4  rack1
+UN  172.20.0.2  103.26 KiB  16      100.0%            09775bc8-47b6-498b-ad50-81e3b0bfe58f  rack1
+
+=== 3 узла UN после возврата: QUORUM ===
+$ cqlsh: CONSISTENCY QUORUM; SELECT service, event_day, event_time, event_id, message FROM shop_events.service_events WHERE service = 'checkout' AND event_day = '2026-11-10' AND event_time = '2026-11-10T10:15:00+0000' AND event_id = 00000000-0000-4000-8000-000000000008;
+Consistency level set to QUORUM.
+
+ service  | event_day  | event_time                      | event_id                             | message
+----------+------------+---------------------------------+--------------------------------------+---------------
+ checkout | 2026-11-10 | 2026-11-10 10:15:00.000000+0000 | 00000000-0000-4000-8000-000000000008 | Order created
+
+(1 rows)
+$ cqlsh: CONSISTENCY QUORUM; INSERT INTO shop_events.service_events (service, event_day, event_time, event_id, error_code, message) VALUES ('checkout', '2026-11-11', '2026-11-11T12:00:00+0000', 31421797-bcb1-4401-a62e-359e32f29142, null, 'failover restored QUORUM');
+Consistency level set to QUORUM.
+$ cqlsh: CONSISTENCY QUORUM; SELECT event_id, message FROM shop_events.service_events WHERE service = 'checkout' AND event_day = '2026-11-11' AND event_time = '2026-11-11T12:00:00+0000' AND event_id = 31421797-bcb1-4401-a62e-359e32f29142;
+Consistency level set to QUORUM.
+
+ event_id                             | message
+--------------------------------------+--------------------------
+ 31421797-bcb1-4401-a62e-359e32f29142 | failover restored QUORUM
+
+(1 rows)
+Итог: чтение — успех; запись — успех; event_id попытки записи — 31421797-bcb1-4401-a62e-359e32f29142
+
+=== 3 узла UN после возврата: ALL ===
+$ cqlsh: CONSISTENCY ALL; SELECT service, event_day, event_time, event_id, message FROM shop_events.service_events WHERE service = 'checkout' AND event_day = '2026-11-10' AND event_time = '2026-11-10T10:15:00+0000' AND event_id = 00000000-0000-4000-8000-000000000008;
+Consistency level set to ALL.
+
+ service  | event_day  | event_time                      | event_id                             | message
+----------+------------+---------------------------------+--------------------------------------+---------------
+ checkout | 2026-11-10 | 2026-11-10 10:15:00.000000+0000 | 00000000-0000-4000-8000-000000000008 | Order created
+
+(1 rows)
+$ cqlsh: CONSISTENCY ALL; INSERT INTO shop_events.service_events (service, event_day, event_time, event_id, error_code, message) VALUES ('checkout', '2026-11-11', '2026-11-11T12:00:00+0000', 32f74b44-f225-463d-a542-6b4ed3062245, null, 'failover restored ALL');
+Consistency level set to ALL.
+$ cqlsh: CONSISTENCY QUORUM; SELECT event_id, message FROM shop_events.service_events WHERE service = 'checkout' AND event_day = '2026-11-11' AND event_time = '2026-11-11T12:00:00+0000' AND event_id = 32f74b44-f225-463d-a542-6b4ed3062245;
+Consistency level set to QUORUM.
+
+ event_id                             | message
+--------------------------------------+-----------------------
+ 32f74b44-f225-463d-a542-6b4ed3062245 | failover restored ALL
+
+(1 rows)
+Итог: чтение — успех; запись — успех; event_id попытки записи — 32f74b44-f225-463d-a542-6b4ed3062245
+=== Таблица результатов ===
+# Результаты проверки отказоустойчивости
+
+| Состояние кластера | Уровень согласованности | Чтение | Запись |
+|---|---|---|---|
+| 3 узла UN | QUORUM | успех | успех |
+| 3 узла UN | ALL | успех | успех |
+| 2 UN, 1 DN | QUORUM | успех | успех |
+| 2 UN, 1 DN | ALL | ошибка | ошибка |
+| 3 узла UN после возврата | QUORUM | успех | успех |
+| 3 узла UN после возврата | ALL | успех | успех |
+
+При факторе репликации 3 уровень QUORUM требует ответы двух реплик, а ALL — всех трёх. При остановке одного узла QUORUM остаётся доступным, ALL возвращает ошибку. Неуспешная запись с ALL может быть частично применена на работающих репликах, поэтому каждая попытка использует новый event_id.
+
+## Сообщения об ошибках
+
+### 2 UN, 1 DN — ALL — чтение
+
+```text
+<stdin>:3:NoHostAvailable: ('Unable to complete the operation against any hosts', {<Host: 127.0.0.1:9042 dc1>: Unavailable('Error from server: code=1000 [Unavailable exception] message="Cannot achieve consistency level ALL" info={\'consistency\': \'ALL\', \'required_replicas\': 3, \'alive_replicas\': 2}')})
+Consistency level set to ALL.
+```
+
+### 2 UN, 1 DN — ALL — запись
+
+```text
+<stdin>:3:NoHostAvailable: ('Unable to complete the operation against any hosts', {<Host: 127.0.0.1:9042 dc1>: Unavailable('Error from server: code=1000 [Unavailable exception] message="Cannot achieve consistency level ALL" info={\'consistency\': \'ALL\', \'required_replicas\': 3, \'alive_replicas\': 2}')})
+Consistency level set to ALL.
+```
+

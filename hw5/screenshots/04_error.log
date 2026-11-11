@@ -1,0 +1,13 @@
+$ docker compose exec -T cassandra1 cqlsh -f /workspace/cql/04_error.cql
+SELECT service, event_day, event_time, event_id, error_code, message
+FROM shop_events.service_events
+WHERE error_code = 'UPSTREAM_TIMEOUT';
+failed to get console mode for stdout: The handle is invalid.
+
+ service  | event_day  | event_time                      | event_id                             | error_code       | message
+----------+------------+---------------------------------+--------------------------------------+------------------+---------------------------
+  catalog | 2026-11-11 | 2026-11-11 10:40:00.000000+0000 | 00000000-0000-4000-8000-000000000006 | UPSTREAM_TIMEOUT | Pricing backend timed out
+ checkout | 2026-11-10 | 2026-11-10 10:45:00.000000+0000 | 00000000-0000-4000-8000-00000000000a | UPSTREAM_TIMEOUT | Payment gateway timed out
+  catalog | 2026-11-10 | 2026-11-10 10:32:00.000000+0000 | 00000000-0000-4000-8000-000000000003 | UPSTREAM_TIMEOUT |  Search backend timed out
+
+(3 rows)

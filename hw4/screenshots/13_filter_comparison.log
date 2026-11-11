@@ -1,0 +1,65 @@
+$ python3 scripts/query.py compare_unfiltered
+POST /videos/_search
+{
+  "track_total_hits": true,
+  "size": 20,
+  "query": {
+    "multi_match": {
+      "query": "данные",
+      "fields": [
+        "title",
+        "description"
+      ]
+    }
+  },
+  "sort": [
+    {
+      "video_id": "asc"
+    }
+  ]
+}
+RESULT
+total=4
+1. v003 score=null views=7137 category=technology title=Базы данных для видеосервиса
+2. v007 score=null views=12653 category=science title=Как устроен телескоп
+3. v008 score=null views=14032 category=science title=Данные спутников Земли
+4. v016 score=null views=6064 category=travel title=Данные о городских маршрутах
+Ожидание: Все категории, где title или description содержит данные.
+
+$ python3 scripts/query.py compare_filtered
+POST /videos/_search
+{
+  "track_total_hits": true,
+  "size": 20,
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "multi_match": {
+            "query": "данные",
+            "fields": [
+              "title",
+              "description"
+            ]
+          }
+        }
+      ],
+      "filter": [
+        {
+          "term": {
+            "category": "technology"
+          }
+        }
+      ]
+    }
+  },
+  "sort": [
+    {
+      "video_id": "asc"
+    }
+  ]
+}
+RESULT
+total=1
+1. v003 score=null views=7137 category=technology title=Базы данных для видеосервиса
+Ожидание: Тот же полнотекстовый запрос, но только категория technology.

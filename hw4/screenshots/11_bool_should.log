@@ -1,0 +1,44 @@
+$ python3 scripts/query.py bool_should
+POST /videos/_search
+{
+  "track_total_hits": true,
+  "size": 10,
+  "query": {
+    "bool": {
+      "filter": [
+        {
+          "term": {
+            "is_premium": false
+          }
+        }
+      ],
+      "should": [
+        {
+          "match": {
+            "title": "Redis"
+          }
+        },
+        {
+          "term": {
+            "tags": "redis"
+          }
+        }
+      ],
+      "minimum_should_match": 1
+    }
+  },
+  "sort": [
+    {
+      "_score": "desc"
+    },
+    {
+      "video_id": "asc"
+    }
+  ]
+}
+RESULT
+total=3
+1. v001 score=5.75594 views=4379 category=technology title=Redis для начинающих
+2. v002 score=5.75594 views=5758 category=technology title=Оптимизация кэша Redis
+3. v003 score=2.96454 views=7137 category=technology title=Базы данных для видеосервиса
+Ожидание: Бесплатные видео с Redis в заголовке или теге; хотя бы одно should обязательно.

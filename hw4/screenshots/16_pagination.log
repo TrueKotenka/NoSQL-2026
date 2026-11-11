@@ -1,0 +1,57 @@
+$ python3 scripts/query.py page_1
+POST /videos/_search
+{
+  "track_total_hits": true,
+  "from": 0,
+  "size": 5,
+  "query": {
+    "match_all": {}
+  },
+  "sort": [
+    {
+      "published_at": "desc"
+    },
+    {
+      "video_id": "asc"
+    }
+  ]
+}
+RESULT
+total=36
+1. v036 score=null views=14644 category=sport title=Подготовка к марафону
+2. v035 score=null views=13265 category=sport title=Растяжка после тренировки
+3. v034 score=null views=11886 category=sport title=Велосипед по городу
+4. v033 score=null views=10507 category=sport title=Силовая тренировка дома
+5. v032 score=null views=9128 category=sport title=Первый забег на пять километров
+Ожидание: Первая страница: пять самых новых видео при стабильной сортировке по дате и video_id.
+
+$ python3 scripts/query.py page_2
+POST /videos/_search
+{
+  "track_total_hits": true,
+  "from": 5,
+  "size": 5,
+  "query": {
+    "match_all": {}
+  },
+  "sort": [
+    {
+      "published_at": "desc"
+    },
+    {
+      "video_id": "asc"
+    }
+  ]
+}
+RESULT
+total=36
+1. v031 score=null views=7749 category=sport title=Разминка перед бегом
+2. v030 score=null views=6370 category=cooking title=Десерт без выпечки
+3. v029 score=null views=4991 category=cooking title=Кофе дома
+4. v028 score=null views=3612 category=cooking title=Суп из сезонных овощей
+5. v027 score=null views=21233 category=cooking title=Хлеб на закваске
+Ожидание: Вторая страница: следующие пять видео, без пересечения с page_1.
+
+Страница 1: ['v036', 'v035', 'v034', 'v033', 'v032']
+Страница 2: ['v031', 'v030', 'v029', 'v028', 'v027']
+Повторяющиеся video_id: []

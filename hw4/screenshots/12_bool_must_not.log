@@ -1,0 +1,34 @@
+$ python3 scripts/query.py bool_must_not
+POST /videos/_search
+{
+  "track_total_hits": true,
+  "size": 10,
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "match": {
+            "title": "данные"
+          }
+        }
+      ],
+      "must_not": [
+        {
+          "term": {
+            "category": "technology"
+          }
+        }
+      ]
+    }
+  },
+  "sort": [
+    {
+      "video_id": "asc"
+    }
+  ]
+}
+RESULT
+total=2
+1. v008 score=null views=14032 category=science title=Данные спутников Земли
+2. v016 score=null views=6064 category=travel title=Данные о городских маршрутах
+Ожидание: Данные в заголовке, кроме категории technology: научное и городское видео.

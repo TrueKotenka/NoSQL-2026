@@ -1,0 +1,31 @@
+$ python3 scripts/query.py exists
+POST /videos/_search
+{
+  "track_total_hits": true,
+  "size": 15,
+  "query": {
+    "exists": {
+      "field": "subtitles"
+    }
+  },
+  "sort": [
+    {
+      "video_id": "asc"
+    }
+  ]
+}
+RESULT
+total=12
+1. v003 score=null views=7137 category=technology title=Базы данных для видеосервиса
+2. v006 score=null views=11274 category=technology title=Базы данных и индексы MongoDB
+3. v009 score=null views=15411 category=science title=Почему небо голубое
+4. v012 score=null views=19548 category=science title=Чёрные дыры без мифов
+5. v015 score=null views=4685 category=travel title=Горы Кавказа летом
+6. v018 score=null views=8822 category=travel title=Осень в Карелии
+7. v021 score=null views=12959 category=music title=Ритм на барабанах
+8. v024 score=null views=17096 category=music title=Чистый звук в комнате
+9. v027 score=null views=21233 category=cooking title=Хлеб на закваске
+10. v030 score=null views=6370 category=cooking title=Десерт без выпечки
+11. v033 score=null views=10507 category=sport title=Силовая тренировка дома
+12. v036 score=null views=14644 category=sport title=Подготовка к марафону
+Ожидание: Двенадцать видео с указанным полем subtitles.

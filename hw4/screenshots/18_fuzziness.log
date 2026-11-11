@@ -1,0 +1,26 @@
+$ python3 scripts/query.py fuzziness
+POST /videos/_search
+{
+  "track_total_hits": true,
+  "size": 10,
+  "query": {
+    "match": {
+      "title": {
+        "query": "Kubernets",
+        "fuzziness": "AUTO"
+      }
+    }
+  },
+  "sort": [
+    {
+      "_score": "desc"
+    },
+    {
+      "video_id": "asc"
+    }
+  ]
+}
+RESULT
+total=1
+1. v005 score=2.95162 views=12300 category=technology title=Kubernetes для разработчиков
+Ожидание: Опечатка Kubernets находит заголовок Kubernetes.

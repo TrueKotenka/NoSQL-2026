@@ -1,0 +1,17 @@
+Подготовка исходного состояния для v036
+PUT /videos/_doc/v036?refresh=wait_for
+result=created; _id=v036
+
+Поиск тестового документа до удаления
+POST /videos/_search
+{"query":{"term":{"video_id":"v036"}},"size":5,"track_total_hits":true}
+total=1
+v036: title=Подготовка к марафону; views=14644
+
+DELETE /videos/_doc/v036?refresh=wait_for
+result=deleted; _id=v036
+
+Тот же поиск после удаления
+POST /videos/_search
+{"query":{"term":{"video_id":"v036"}},"size":5,"track_total_hits":true}
+total=0

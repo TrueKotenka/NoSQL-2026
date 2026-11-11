@@ -1,0 +1,59 @@
+=== Возврат cassandra3 ===
+$ docker compose start cassandra3
+ Container hw5-cassandra1-1 Waiting 
+ Container hw5-cassandra1-1 Healthy 
+ Container hw5-cassandra2-1 Waiting 
+ Container hw5-cassandra2-1 Healthy 
+ Container hw5-cassandra3-1 Starting 
+ Container hw5-cassandra3-1 Started 
+$ docker compose exec -T cassandra1 nodetool status
+Datacenter: dc1
+===============
+Status=Up/Down
+|/ State=Normal/Leaving/Joining/Moving
+--  Address     Load        Tokens  Owns (effective)  Host ID                               Rack 
+UN  172.20.0.3  99.87 KiB   16      100.0%            77d2fac2-9643-445e-a261-734d718e008e  rack1
+UN  172.20.0.4  166.92 KiB  16      100.0%            fb708983-48d2-40f0-af34-cf3d67bdc8e4  rack1
+UN  172.20.0.2  103.26 KiB  16      100.0%            09775bc8-47b6-498b-ad50-81e3b0bfe58f  rack1
+
+=== 3 узла UN после возврата: QUORUM ===
+$ cqlsh: CONSISTENCY QUORUM; SELECT service, event_day, event_time, event_id, message FROM shop_events.service_events WHERE service = 'checkout' AND event_day = '2026-11-10' AND event_time = '2026-11-10T10:15:00+0000' AND event_id = 00000000-0000-4000-8000-000000000008;
+Consistency level set to QUORUM.
+
+ service  | event_day  | event_time                      | event_id                             | message
+----------+------------+---------------------------------+--------------------------------------+---------------
+ checkout | 2026-11-10 | 2026-11-10 10:15:00.000000+0000 | 00000000-0000-4000-8000-000000000008 | Order created
+
+(1 rows)
+$ cqlsh: CONSISTENCY QUORUM; INSERT INTO shop_events.service_events (service, event_day, event_time, event_id, error_code, message) VALUES ('checkout', '2026-11-11', '2026-11-11T12:00:00+0000', 31421797-bcb1-4401-a62e-359e32f29142, null, 'failover restored QUORUM');
+Consistency level set to QUORUM.
+$ cqlsh: CONSISTENCY QUORUM; SELECT event_id, message FROM shop_events.service_events WHERE service = 'checkout' AND event_day = '2026-11-11' AND event_time = '2026-11-11T12:00:00+0000' AND event_id = 31421797-bcb1-4401-a62e-359e32f29142;
+Consistency level set to QUORUM.
+
+ event_id                             | message
+--------------------------------------+--------------------------
+ 31421797-bcb1-4401-a62e-359e32f29142 | failover restored QUORUM
+
+(1 rows)
+Итог: чтение — успех; запись — успех; event_id попытки записи — 31421797-bcb1-4401-a62e-359e32f29142
+
+=== 3 узла UN после возврата: ALL ===
+$ cqlsh: CONSISTENCY ALL; SELECT service, event_day, event_time, event_id, message FROM shop_events.service_events WHERE service = 'checkout' AND event_day = '2026-11-10' AND event_time = '2026-11-10T10:15:00+0000' AND event_id = 00000000-0000-4000-8000-000000000008;
+Consistency level set to ALL.
+
+ service  | event_day  | event_time                      | event_id                             | message
+----------+------------+---------------------------------+--------------------------------------+---------------
+ checkout | 2026-11-10 | 2026-11-10 10:15:00.000000+0000 | 00000000-0000-4000-8000-000000000008 | Order created
+
+(1 rows)
+$ cqlsh: CONSISTENCY ALL; INSERT INTO shop_events.service_events (service, event_day, event_time, event_id, error_code, message) VALUES ('checkout', '2026-11-11', '2026-11-11T12:00:00+0000', 32f74b44-f225-463d-a542-6b4ed3062245, null, 'failover restored ALL');
+Consistency level set to ALL.
+$ cqlsh: CONSISTENCY QUORUM; SELECT event_id, message FROM shop_events.service_events WHERE service = 'checkout' AND event_day = '2026-11-11' AND event_time = '2026-11-11T12:00:00+0000' AND event_id = 32f74b44-f225-463d-a542-6b4ed3062245;
+Consistency level set to QUORUM.
+
+ event_id                             | message
+--------------------------------------+-----------------------
+ 32f74b44-f225-463d-a542-6b4ed3062245 | failover restored ALL
+
+(1 rows)
+Итог: чтение — успех; запись — успех; event_id попытки записи — 32f74b44-f225-463d-a542-6b4ed3062245

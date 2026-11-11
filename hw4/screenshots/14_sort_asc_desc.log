@@ -1,0 +1,51 @@
+$ python3 scripts/query.py sort_views_asc
+POST /videos/_search
+{
+  "track_total_hits": true,
+  "size": 5,
+  "query": {
+    "match_all": {}
+  },
+  "sort": [
+    {
+      "views": "asc"
+    },
+    {
+      "video_id": "asc"
+    }
+  ]
+}
+RESULT
+total=36
+1. v014 score=null views=3306 category=travel title=Пешком по Санкт Петербургу
+2. v028 score=null views=3612 category=cooking title=Суп из сезонных овощей
+3. v001 score=null views=4379 category=technology title=Redis для начинающих
+4. v015 score=null views=4685 category=travel title=Горы Кавказа летом
+5. v029 score=null views=4991 category=cooking title=Кофе дома
+Ожидание: Пять наименее просматриваемых видео; при равных views порядок задаёт video_id.
+
+$ python3 scripts/query.py sort_views_desc
+POST /videos/_search
+{
+  "track_total_hits": true,
+  "size": 5,
+  "query": {
+    "match_all": {}
+  },
+  "sort": [
+    {
+      "views": "desc"
+    },
+    {
+      "video_id": "asc"
+    }
+  ]
+}
+RESULT
+total=36
+1. v027 score=null views=21233 category=cooking title=Хлеб на закваске
+2. v013 score=null views=20927 category=travel title=Выходные в Казани
+3. v026 score=null views=19854 category=cooking title=Завтрак за десять минут
+4. v012 score=null views=19548 category=science title=Чёрные дыры без мифов
+5. v025 score=null views=18475 category=cooking title=Домашняя паста
+Ожидание: Пять наиболее просматриваемых видео.

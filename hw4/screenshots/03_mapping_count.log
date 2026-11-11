@@ -1,0 +1,59 @@
+GET /videos/_mapping
+{
+  "videos": {
+    "mappings": {
+      "dynamic": "strict",
+      "properties": {
+        "category": {
+          "type": "keyword"
+        },
+        "channel": {
+          "type": "keyword"
+        },
+        "description": {
+          "type": "text",
+          "analyzer": "standard"
+        },
+        "duration_minutes": {
+          "type": "integer"
+        },
+        "is_premium": {
+          "type": "boolean"
+        },
+        "published_at": {
+          "type": "date",
+          "format": "strict_date"
+        },
+        "rating": {
+          "type": "float"
+        },
+        "subtitles": {
+          "type": "keyword"
+        },
+        "tags": {
+          "type": "keyword"
+        },
+        "title": {
+          "type": "text",
+          "analyzer": "standard"
+        },
+        "video_id": {
+          "type": "keyword"
+        },
+        "views": {
+          "type": "integer"
+        }
+      }
+    }
+  }
+}
+GET /videos/_count
+{
+  "count": 36,
+  "_shards": {
+    "total": 1,
+    "successful": 1,
+    "skipped": 0,
+    "failed": 0
+  }
+}

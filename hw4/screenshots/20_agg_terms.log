@@ -1,0 +1,48 @@
+$ python3 scripts/query.py agg_terms
+POST /videos/_search
+{
+  "size": 0,
+  "aggs": {
+    "by_category": {
+      "terms": {
+        "field": "category",
+        "size": 10
+      }
+    }
+  }
+}
+RESULT
+total=36
+{
+  "by_category": {
+    "doc_count_error_upper_bound": 0,
+    "sum_other_doc_count": 0,
+    "buckets": [
+      {
+        "key": "cooking",
+        "doc_count": 6
+      },
+      {
+        "key": "music",
+        "doc_count": 6
+      },
+      {
+        "key": "science",
+        "doc_count": 6
+      },
+      {
+        "key": "sport",
+        "doc_count": 6
+      },
+      {
+        "key": "technology",
+        "doc_count": 6
+      },
+      {
+        "key": "travel",
+        "doc_count": 6
+      }
+    ]
+  }
+}
+Ожидание: По шесть видео в каждой из шести категорий.

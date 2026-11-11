@@ -1,0 +1,64 @@
+$ python3 scripts/query.py score_description_priority
+POST /videos/_search
+{
+  "track_total_hits": true,
+  "size": 10,
+  "query": {
+    "multi_match": {
+      "query": "Redis",
+      "fields": [
+        "title",
+        "description^2"
+      ]
+    }
+  },
+  "sort": [
+    {
+      "_score": "desc"
+    },
+    {
+      "video_id": "asc"
+    }
+  ]
+}
+RESULT
+total=3
+1. v002 score=4.38418 views=5758 category=technology title=Оптимизация кэша Redis
+2. v001 score=4.15035 views=4379 category=technology title=Redis для начинающих
+3. v003 score=4.15035 views=7137 category=technology title=Базы данных для видеосервиса
+Ожидание: Первый вариант multi_match: description^2, title без усиления.
+
+$ python3 scripts/query.py score_title_priority
+POST /videos/_search
+{
+  "track_total_hits": true,
+  "size": 10,
+  "query": {
+    "multi_match": {
+      "query": "Redis",
+      "fields": [
+        "title^3",
+        "description"
+      ]
+    }
+  },
+  "sort": [
+    {
+      "_score": "desc"
+    },
+    {
+      "video_id": "asc"
+    }
+  ]
+}
+RESULT
+total=3
+1. v001 score=8.37420 views=4379 category=technology title=Redis для начинающих
+2. v002 score=8.37420 views=5758 category=technology title=Оптимизация кэша Redis
+3. v003 score=2.07518 views=7137 category=technology title=Базы данных для видеосервиса
+Ожидание: Второй вариант того же запроса: title^3, description без усиления.
+
+Сравнение позиций и _score:
+v001: место 2 → 1; _score 4.15035 → 8.37420
+v002: место 1 → 2; _score 4.38418 → 8.37420
+v003: место 3 → 3; _score 4.15035 → 2.07518

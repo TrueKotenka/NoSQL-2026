@@ -1,0 +1,43 @@
+$ python3 scripts/query.py agg_date_histogram
+POST /videos/_search
+{
+  "size": 0,
+  "aggs": {
+    "by_month": {
+      "date_histogram": {
+        "field": "published_at",
+        "calendar_interval": "month",
+        "format": "yyyy-MM"
+      }
+    }
+  }
+}
+RESULT
+total=36
+{
+  "by_month": {
+    "buckets": [
+      {
+        "key_as_string": "2026-01",
+        "key": 1767225600000,
+        "doc_count": 10
+      },
+      {
+        "key_as_string": "2026-02",
+        "key": 1769904000000,
+        "doc_count": 9
+      },
+      {
+        "key_as_string": "2026-03",
+        "key": 1772323200000,
+        "doc_count": 11
+      },
+      {
+        "key_as_string": "2026-04",
+        "key": 1775001600000,
+        "doc_count": 6
+      }
+    ]
+  }
+}
+Ожидание: Количество публикаций по календарным месяцам 2026 года.
